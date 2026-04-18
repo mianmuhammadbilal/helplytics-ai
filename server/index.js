@@ -23,10 +23,12 @@ app.get('/', (req, res) => {
 });
 
 // MongoDB connect
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGO_URI, {
+  serverSelectionTimeoutMS: 30000,
+  socketTimeoutMS: 45000,
+})
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.log('MongoDB error:', err));
-
 // Local development
 if (process.env.NODE_ENV !== 'production') {
   const PORT = process.env.PORT || 5000;
