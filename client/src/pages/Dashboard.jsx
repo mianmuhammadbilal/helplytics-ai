@@ -9,7 +9,7 @@ export default function Dashboard() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/requests').then(r => setRequests(r.data.slice(0, 6)));
+    axios.get('https://helplytics-ai-a3hz.vercel.app/api/requests').then(r => setRequests(r.data.slice(0, 6)));
   }, []);
 
   const stats = [

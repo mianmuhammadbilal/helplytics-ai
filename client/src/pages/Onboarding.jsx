@@ -9,7 +9,7 @@ export default function Onboarding() {
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
-    await axios.put('http://localhost:5000/api/auth/profile', {
+    await axios.put('https://helplytics-ai-a3hz.vercel.app/api/auth/profile', {
       skills: form.skills.split(',').map(s => s.trim()),
       interests: form.interests.split(',').map(s => s.trim()),
       location: form.location

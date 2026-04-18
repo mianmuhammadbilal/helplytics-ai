@@ -15,7 +15,7 @@ export default function CreateRequest() {
     if (!form.title || !form.description) return;
     setAnalyzing(true);
     try {
-      const { data } = await axios.post('http://localhost:5000/api/ai/analyze', {
+      const { data } = await axios.post('https://helplytics-ai-a3hz.vercel.app/api/ai/analyze', {
         title: form.title, description: form.description
       });
       setAiResult(data);
@@ -27,7 +27,7 @@ export default function CreateRequest() {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      await axios.post('http://localhost:5000/api/requests', form, {
+      await axios.post('https://helplytics-ai-a3hz.vercel.app/api/requests', form, {
         headers: { Authorization: `Bearer ${token}` }
       });
       navigate('/explore');

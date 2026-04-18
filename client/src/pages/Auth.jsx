@@ -15,7 +15,7 @@ export default function Auth() {
     setLoading(true); setError('');
     try {
       const endpoint = isLogin ? '/api/auth/login' : '/api/auth/signup';
-      const { data } = await axios.post(`http://localhost:5000${endpoint}`, form);
+      const { data } = await axios.post(`https://helplytics-ai-a3hz.vercel.app${endpoint}`, form);
       login(data.user, data.token);
       navigate(isLogin ? '/dashboard' : '/onboarding');
     } catch (err) {

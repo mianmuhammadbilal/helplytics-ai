@@ -5,7 +5,7 @@ export default function Leaderboard() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/requests/meta/leaderboard').then(r => setUsers(r.data));
+    axios.get('https://helplytics-ai-a3hz.vercel.app/api/requests/meta/leaderboard').then(r => setUsers(r.data));
   }, []);
 
   const medals = ['🥇', '🥈', '🥉'];

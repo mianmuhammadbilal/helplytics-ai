@@ -9,7 +9,7 @@ export default function Explore() {
 
   useEffect(() => {
     const params = urgency ? `?urgency=${urgency}` : '';
-    axios.get(`http://localhost:5000/api/requests${params}`).then(r => setRequests(r.data));
+    axios.get(`https://helplytics-ai-a3hz.vercel.app/api/requests${params}`).then(r => setRequests(r.data));
   }, [urgency]);
 
   const urgencyColor = u => u === 'high' ? '#ef4444' : u === 'medium' ? '#f59e0b' : '#22c55e';

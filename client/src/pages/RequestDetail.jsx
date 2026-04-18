@@ -10,19 +10,19 @@ export default function RequestDetail() {
   const [request, setRequest] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/requests/${id}`)
+    axios.get(`https://helplytics-ai-a3hz.vercel.app/api/requests/${id}`)
       .then(r => setRequest(r.data));
   }, [id]);
 
   const handleHelp = async () => {
-    await axios.post(`http://localhost:5000/api/requests/${id}/help`, {}, {
+    await axios.post(`https://helplytics-ai-a3hz.vercel.app/api/requests/${id}/help`, {}, {
       headers: { Authorization: `Bearer ${token}` }
     });
     alert('You offered to help!');
   };
 
   const handleSolve = async () => {
-    await axios.patch(`http://localhost:5000/api/requests/${id}/solve`, {}, {
+    await axios.patch(`https://helplytics-ai-a3hz.vercel.app/api/requests/${id}/solve`, {}, {
       headers: { Authorization: `Bearer ${token}` }
     });
     navigate('/explore');
