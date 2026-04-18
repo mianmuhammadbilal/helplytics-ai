@@ -61,14 +61,21 @@ export default function Navbar() {
               color: '#fff', border: 'none', padding: '8px 16px',
               borderRadius: 8, fontSize: 13, fontWeight: 600
             }}>+ New Request</Link>
-            <div style={{
-              width: 32, height: 32, borderRadius: '50%',
-              background: 'linear-gradient(135deg, #6366f1, #a855f7)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 13, fontWeight: 700, cursor: 'pointer'
-            }} onClick={handleLogout} title="Logout">
-              {user.name?.charAt(0).toUpperCase()}
-            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+  <div style={{
+    width: 32, height: 32, borderRadius: '50%',
+    background: 'linear-gradient(135deg, #6366f1, #a855f7)',
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
+    fontSize: 13, fontWeight: 700
+  }}>
+    {user.name?.charAt(0).toUpperCase()}
+  </div>
+  <button onClick={handleLogout} style={{
+    background: 'rgba(239,68,68,0.1)', color: '#fca5a5',
+    border: '1px solid rgba(239,68,68,0.2)',
+    padding: '6px 14px', borderRadius: 8, fontSize: 13, fontWeight: 500
+  }}>Logout</button>
+</div>
           </>
         ) : (
           <Link to="/auth" style={{
