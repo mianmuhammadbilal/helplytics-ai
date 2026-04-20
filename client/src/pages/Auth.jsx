@@ -24,111 +24,178 @@ export default function Auth() {
     setLoading(false);
   };
 
-  const roles = [
-    { value: 'need_help', label: '🙋 Need Help', desc: 'Get support' },
-    { value: 'can_help', label: '🤝 Give Help', desc: 'Support others' },
-    { value: 'both', label: '⚡ Both', desc: 'Full access' },
-  ];
-
   return (
     <div style={{
-      background: '#050508', minHeight: '100vh',
-      display: 'flex', alignItems: 'center', justifyContent: 'center',
-      padding: 20, position: 'relative', overflow: 'hidden'
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #e8f0e9 0%, #f5f0e8 40%, #f0e8e0 100%)',
+      display: 'flex', flexDirection: 'column'
     }}>
-      {/* Glow */}
-      <div style={{
-        position: 'absolute', top: '30%', left: '50%', transform: 'translateX(-50%)',
-        width: 500, height: 500, borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%)',
-        pointerEvents: 'none'
-      }} />
 
+      {/* Main Content */}
       <div style={{
-        background: 'rgba(255,255,255,0.03)',
-        border: '1px solid rgba(255,255,255,0.08)',
-        borderRadius: 20, padding: '40px 36px', width: '100%', maxWidth: 420,
-        backdropFilter: 'blur(20px)', position: 'relative'
+        flex: 1, display: 'flex', alignItems: 'center',
+        justifyContent: 'center', padding: '40px 24px'
       }}>
-        {/* Logo */}
-        <div style={{ textAlign: 'center', marginBottom: 28 }}>
+        <div style={{ display: 'flex', gap: 24, maxWidth: 960, width: '100%', alignItems: 'stretch' }}>
+
+          {/* Left Card */}
           <div style={{
-            width: 44, height: 44, borderRadius: 12,
-            background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: 20, margin: '0 auto 12px'
-          }}>⚡</div>
-          <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 6 }}>
-            {isLogin ? 'Welcome back' : 'Join Helplytics'}
-          </h2>
-          <p style={{ color: '#64748b', fontSize: 14 }}>
-            {isLogin ? 'Sign in to your account' : 'Create your free account'}
-          </p>
-        </div>
+            background: '#14302c', borderRadius: 20, padding: '48px 40px',
+            flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 20
+          }}>
+            <div style={{
+              fontSize: 11, fontWeight: 700, letterSpacing: 1.5,
+              color: '#88b5b0', textTransform: 'uppercase'
+            }}>COMMUNITY ACCESS</div>
 
-        {error && (
-          <div style={{
-            background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)',
-            color: '#fca5a5', padding: '10px 14px', borderRadius: 10, marginBottom: 16, fontSize: 13
-          }}>{error}</div>
-        )}
+            <h2 style={{ fontSize: 42, fontWeight: 800, color: '#fff', lineHeight: 1.15, margin: 0 }}>
+              Enter the support network.
+            </h2>
 
-        {!isLogin && (
-          <input placeholder="Full Name" value={form.name}
-            onChange={e => setForm({...form, name: e.target.value})} style={inputStyle} />
-        )}
-        <input placeholder="Email address" value={form.email}
-          onChange={e => setForm({...form, email: e.target.value})} style={inputStyle} />
-        <input type="password" placeholder="Password" value={form.password}
-          onChange={e => setForm({...form, password: e.target.value})} style={inputStyle} />
+            <p style={{ color: '#a8c5c0', fontSize: 15, lineHeight: 1.7, margin: 0 }}>
+              Choose your role, set your identity, and jump into a multi-page product flow designed for asking, offering, and tracking help with a premium interface.
+            </p>
 
-        {!isLogin && (
-          <div style={{ marginBottom: 20 }}>
-            <p style={{ color: '#64748b', fontSize: 12, marginBottom: 10, textTransform: 'uppercase', letterSpacing: 1 }}>I want to</p>
-            <div style={{ display: 'flex', gap: 8 }}>
-              {roles.map(r => (
-                <button key={r.value} onClick={() => setForm({...form, role: r.value})} style={{
-                  flex: 1, padding: '10px 6px', borderRadius: 10,
-                  border: `1px solid ${form.role === r.value ? '#6366f1' : 'rgba(255,255,255,0.08)'}`,
-                  background: form.role === r.value ? 'rgba(99,102,241,0.15)' : 'rgba(255,255,255,0.02)',
-                  color: form.role === r.value ? '#818cf8' : '#475569',
-                  fontSize: 12, textAlign: 'center', transition: 'all 0.2s'
-                }}>
-                  <div style={{ fontWeight: 600, marginBottom: 2 }}>{r.label}</div>
-                  <div style={{ fontSize: 11, opacity: 0.7 }}>{r.desc}</div>
-                </button>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 8 }}>
+              {[
+                'Role-based entry for Need Help, Can Help, or Both',
+                'Direct path into dashboard, requests, AI Center, and community feed',
+                'Persistent session powered by MongoDB & JWT',
+              ].map(item => (
+                <div key={item} style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
+                  <span style={{ color: '#1ab5a8', fontSize: 16, marginTop: 1 }}>•</span>
+                  <span style={{ color: '#c8dbd9', fontSize: 14, lineHeight: 1.5 }}>{item}</span>
+                </div>
               ))}
             </div>
           </div>
-        )}
 
-        <button onClick={handleSubmit} disabled={loading} style={{
-          width: '100%',
-          background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-          color: '#fff', border: 'none', padding: '13px',
-          borderRadius: 10, fontSize: 15, fontWeight: 600,
-          opacity: loading ? 0.7 : 1,
-          boxShadow: '0 0 20px rgba(99,102,241,0.3)'
-        }}>
-          {loading ? 'Please wait...' : (isLogin ? 'Sign In' : 'Create Account')}
-        </button>
+          {/* Right Card */}
+          <div style={{
+            background: '#fff', borderRadius: 20, padding: '48px 40px',
+            flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center'
+          }}>
+            <div style={{
+              fontSize: 11, fontWeight: 700, letterSpacing: 1.5,
+              color: '#108077', textTransform: 'uppercase', marginBottom: 12
+            }}>LOGIN / SIGNUP</div>
 
-        <p style={{ color: '#475569', textAlign: 'center', marginTop: 20, fontSize: 14 }}>
-          {isLogin ? "Don't have an account? " : "Already have one? "}
-          <span onClick={() => { setIsLogin(!isLogin); setError(''); }}
-            style={{ color: '#818cf8', cursor: 'pointer', fontWeight: 600 }}>
-            {isLogin ? 'Sign up' : 'Sign in'}
-          </span>
-        </p>
+            <h2 style={{ fontSize: 36, fontWeight: 800, color: '#1a1a1a', lineHeight: 1.2, marginBottom: 28 }}>
+              Authenticate your community profile
+            </h2>
+
+            {error && (
+              <div style={{
+                background: '#fee2e2', border: '1px solid #fca5a5',
+                color: '#dc2626', padding: '10px 14px', borderRadius: 10,
+                marginBottom: 16, fontSize: 13
+              }}>{error}</div>
+            )}
+
+            {/* Full Name - only signup */}
+            {!isLogin && (
+              <div style={{ marginBottom: 16 }}>
+                <label style={labelStyle}>Full Name</label>
+                <input
+                  placeholder="Enter your full name"
+                  value={form.name}
+                  onChange={e => setForm({...form, name: e.target.value})}
+                  style={inputStyle}
+                />
+              </div>
+            )}
+
+            {/* Role Selection - only signup */}
+            {!isLogin && (
+              <div style={{ marginBottom: 16 }}>
+                <label style={labelStyle}>Role selection</label>
+                <select
+                  value={form.role}
+                  onChange={e => setForm({...form, role: e.target.value})}
+                  style={inputStyle}
+                >
+                  <option value="need_help">Need Help</option>
+                  <option value="can_help">Can Help</option>
+                  <option value="both">Both</option>
+                </select>
+              </div>
+            )}
+
+            {/* Email & Password side by side */}
+            <div style={{ display: 'flex', gap: 12, marginBottom: 24 }}>
+              <div style={{ flex: 1 }}>
+                <label style={labelStyle}>Email</label>
+                <input
+                  placeholder="community@helplytics.ai"
+                  value={form.email}
+                  onChange={e => setForm({...form, email: e.target.value})}
+                  style={inputStyle}
+                />
+              </div>
+              <div style={{ flex: 1 }}>
+                <label style={labelStyle}>Password</label>
+                <input
+                  type="password"
+                  placeholder="••••••••"
+                  value={form.password}
+                  onChange={e => setForm({...form, password: e.target.value})}
+                  style={inputStyle}
+                />
+              </div>
+            </div>
+
+            {/* Submit Button */}
+            <button
+              onClick={handleSubmit}
+              disabled={loading}
+              style={{
+                width: '100%',
+                background: 'linear-gradient(135deg, #108077, #1ab5a8)',
+                color: '#fff', border: 'none',
+                padding: '15px', borderRadius: 50,
+                fontSize: 16, fontWeight: 600, cursor: 'pointer',
+                transition: 'transform 0.2s, box-shadow 0.2s',
+                opacity: loading ? 0.7 : 1
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 8px 24px rgba(16,128,119,0.45)';
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = 'none';
+              }}
+            >
+              {loading ? 'Please wait...' : isLogin ? 'Continue to dashboard' : 'Create Account'}
+            </button>
+
+            {/* Toggle */}
+            <p style={{ color: '#888', textAlign: 'center', marginTop: 20, fontSize: 14 }}>
+              {isLogin ? "Don't have an account? " : "Already have one? "}
+              <span
+                onClick={() => { setIsLogin(!isLogin); setError(''); }}
+                style={{ color: '#108077', cursor: 'pointer', fontWeight: 600 }}
+              >
+                {isLogin ? 'Sign up' : 'Sign in'}
+              </span>
+            </p>
+          </div>
+
+        </div>
       </div>
     </div>
   );
 }
 
 const inputStyle = {
-  width: '100%', background: 'rgba(255,255,255,0.04)',
-  border: '1px solid rgba(255,255,255,0.08)', borderRadius: 10,
-  padding: '11px 14px', color: '#fff', marginBottom: 12, fontSize: 14,
+  width: '100%', background: '#f9f9f9',
+  border: '1px solid rgba(0,0,0,0.12)', borderRadius: 10,
+  padding: '12px 14px', color: '#1a1a1a', fontSize: 14,
   outline: 'none', boxSizing: 'border-box',
-  transition: 'border-color 0.2s'
+  fontFamily: 'Inter, sans-serif'
+};
+
+const labelStyle = {
+  display: 'block', fontSize: 13, fontWeight: 500,
+  color: '#555', marginBottom: 6
 };
