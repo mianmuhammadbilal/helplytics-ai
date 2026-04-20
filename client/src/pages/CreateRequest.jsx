@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 export default function CreateRequest() {
-  const [form, setForm] = useState({ title: '', description: '', category: '', tags: [], urgency: 'medium' });
+  const [form, setForm] = useState({ title: '', description: '', category: 'Web Development', tags: [], urgency: 'high' });
+  const [tagsInput, setTagsInput] = useState('');
   const [aiResult, setAiResult] = useState(null);
   const [analyzing, setAnalyzing] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -19,7 +20,8 @@ export default function CreateRequest() {
         title: form.title, description: form.description
       });
       setAiResult(data);
-      setForm(f => ({ ...f, category: data.category, tags: data.tags, urgency: data.urgency }));
+      setForm(f => ({ ...f, category: data.category || f.category, tags: data.tags || f.tags, urgency: data.urgency || f.urgency }));
+      setTagsInput(data.tags?.join(', ') || tagsInput);
     } catch {}
     setAnalyzing(false);
   };
@@ -27,7 +29,8 @@ export default function CreateRequest() {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      await axios.post('https://helplytics-ai-a3hz.vercel.app/api/requests', form, {
+      const tags = tagsInput.split(',').map(t => t.trim()).filter(Boolean);
+      await axios.post('https://helplytics-ai-a3hz.vercel.app/api/requests', { ...form, tags }, {
         headers: { Authorization: `Bearer ${token}` }
       });
       navigate('/explore');
@@ -35,100 +38,164 @@ export default function CreateRequest() {
     setLoading(false);
   };
 
-  const urgencyColor = u => u === 'high' ? '#ef4444' : u === 'medium' ? '#f59e0b' : '#22c55e';
-
   return (
-    <div style={{ background: '#050508', minHeight: '100vh', padding: '40px 24px' }}>
-      <div style={{ maxWidth: 660, margin: '0 auto' }}>
+    <div style={{ background: '#f5f0e8', minHeight: '100vh', fontFamily: 'Inter, sans-serif' }}>
 
-        <div style={{ marginBottom: 28 }}>
-          <h1 style={{ fontSize: 26, fontWeight: 700, marginBottom: 6 }}>Create Help Request</h1>
-          <p style={{ color: '#64748b', fontSize: 14 }}>Describe your problem — AI will categorize it automatically</p>
-        </div>
+      {/* Hero Banner */}
+      <div style={{ background: '#282f31', margin: '24px 24px 0', borderRadius: 16, padding: '36px 40px' }}>
+        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.5, color: '#88a0a0', textTransform: 'uppercase', marginBottom: 12 }}>CREATE REQUEST</div>
+        <h1 style={{ fontSize: 42, fontWeight: 800, color: '#fff', margin: '0 0 12px', lineHeight: 1.15 }}>
+          Turn a rough problem into a clear help request.
+        </h1>
+        <p style={{ color: '#94a8a8', fontSize: 15, margin: 0 }}>
+          Use built-in AI suggestions for category, urgency, tags, and a stronger description rewrite.
+        </p>
+      </div>
 
-        <div style={{
-          background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)',
-          borderRadius: 20, padding: 28
-        }}>
-          <label style={labelStyle}>Request Title</label>
-          <input placeholder="e.g. Need help with React useEffect..." value={form.title}
-            onChange={e => setForm({...form, title: e.target.value})} style={inputStyle} />
+      {/* Main Grid */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 380px', gap: 20, padding: '24px' }}>
 
-          <label style={labelStyle}>Description</label>
-          <textarea placeholder="Describe your problem in detail..." value={form.description}
-            onChange={e => setForm({...form, description: e.target.value})}
-            rows={5} style={{...inputStyle, resize: 'vertical'}} />
+        {/* Left — Form */}
+        <div style={{ background: '#fff', border: '1px solid rgba(0,0,0,0.07)', borderRadius: 16, padding: '28px' }}>
 
-          {/* AI Button */}
-          <button onClick={analyzeWithAI} disabled={analyzing || !form.title || !form.description} style={{
-            display: 'flex', alignItems: 'center', gap: 8,
-            background: 'rgba(99,102,241,0.1)', color: '#818cf8',
-            border: '1px solid rgba(99,102,241,0.3)', padding: '10px 18px',
-            borderRadius: 10, marginBottom: 20, fontSize: 14, fontWeight: 500,
-            opacity: (!form.title || !form.description) ? 0.5 : 1,
-            transition: 'all 0.2s'
-          }}>
-            <span style={{ fontSize: 16 }}>✨</span>
-            {analyzing ? 'Analyzing with Gemini AI...' : 'Auto-categorize with AI'}
-          </button>
-
-          {/* AI Result */}
-          {aiResult && (
-            <div style={{
-              background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.2)',
-              borderRadius: 12, padding: 16, marginBottom: 20
-            }}>
-              <p style={{ color: '#818cf8', fontSize: 12, fontWeight: 600, marginBottom: 10, textTransform: 'uppercase', letterSpacing: 1 }}>
-                ✨ AI Analysis Applied
-              </p>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 8 }}>
-                <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: 8, padding: '8px 12px' }}>
-                  <div style={{ color: '#475569', fontSize: 11, marginBottom: 2 }}>CATEGORY</div>
-                  <div style={{ fontSize: 13, fontWeight: 500 }}>{aiResult.category}</div>
-                </div>
-                <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: 8, padding: '8px 12px' }}>
-                  <div style={{ color: '#475569', fontSize: 11, marginBottom: 2 }}>URGENCY</div>
-                  <div style={{ fontSize: 13, fontWeight: 500, color: urgencyColor(aiResult.urgency) }}>{aiResult.urgency}</div>
-                </div>
-              </div>
-              <div style={{ color: '#64748b', fontSize: 13, lineHeight: 1.5 }}>{aiResult.summary}</div>
-            </div>
-          )}
-
-          {/* Urgency Select */}
-          <label style={labelStyle}>Urgency Level</label>
-          <div style={{ display: 'flex', gap: 10, marginBottom: 24 }}>
-            {['low', 'medium', 'high'].map(u => (
-              <button key={u} onClick={() => setForm({...form, urgency: u})} style={{
-                flex: 1, padding: '10px', borderRadius: 10,
-                border: `1px solid ${form.urgency === u ? urgencyColor(u) : 'rgba(255,255,255,0.08)'}`,
-                background: form.urgency === u ? `${urgencyColor(u)}15` : 'rgba(255,255,255,0.02)',
-                color: form.urgency === u ? urgencyColor(u) : '#475569',
-                fontSize: 13, fontWeight: 500, transition: 'all 0.2s'
-              }}>
-                {u === 'low' ? '🟢' : u === 'medium' ? '🟡' : '🔴'} {u.charAt(0).toUpperCase() + u.slice(1)}
-              </button>
-            ))}
+          {/* Title */}
+          <div style={{ marginBottom: 18 }}>
+            <label style={labelStyle}>Title</label>
+            <input
+              placeholder="Need review on my JavaScript quiz app before submission"
+              value={form.title}
+              onChange={e => setForm({...form, title: e.target.value})}
+              style={inputStyle}
+            />
           </div>
 
-          <button onClick={handleSubmit} disabled={loading} style={{
-            width: '100%', background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-            color: '#fff', border: 'none', padding: '13px',
-            borderRadius: 10, fontSize: 15, fontWeight: 600,
-            boxShadow: '0 0 20px rgba(99,102,241,0.3)', opacity: loading ? 0.7 : 1
-          }}>
-            {loading ? 'Posting...' : 'Post Request →'}
-          </button>
+          {/* Description */}
+          <div style={{ marginBottom: 18 }}>
+            <label style={labelStyle}>Description</label>
+            <textarea
+              placeholder="Explain the challenge, your current progress, deadline, and what kind of help would be useful."
+              value={form.description}
+              onChange={e => setForm({...form, description: e.target.value})}
+              rows={5}
+              style={{...inputStyle, resize: 'vertical'}}
+            />
+          </div>
+
+          {/* Tags + Category side by side */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 18 }}>
+            <div>
+              <label style={labelStyle}>Tags</label>
+              <input
+                placeholder="JavaScript, Debugging, Review"
+                value={tagsInput}
+                onChange={e => setTagsInput(e.target.value)}
+                style={inputStyle}
+              />
+            </div>
+            <div>
+              <label style={labelStyle}>Category</label>
+              <select value={form.category} onChange={e => setForm({...form, category: e.target.value})} style={inputStyle}>
+                <option>Web Development</option>
+                <option>Programming</option>
+                <option>Design</option>
+                <option>Database</option>
+                <option>Career</option>
+                <option>Tools</option>
+                <option>General</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Urgency */}
+          <div style={{ marginBottom: 28 }}>
+            <label style={labelStyle}>Urgency</label>
+            <select value={form.urgency} onChange={e => setForm({...form, urgency: e.target.value})} style={inputStyle}>
+              <option value="high">High</option>
+              <option value="medium">Medium</option>
+              <option value="low">Low</option>
+            </select>
+          </div>
+
+          {/* Buttons */}
+          <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+            <button onClick={analyzeWithAI} disabled={analyzing || !form.title || !form.description} style={{
+              background: 'transparent', color: '#1a1a1a',
+              border: '1px solid rgba(0,0,0,0.2)', padding: '11px 22px',
+              borderRadius: 50, fontSize: 14, fontWeight: 500, cursor: 'pointer',
+              opacity: (!form.title || !form.description) ? 0.5 : 1,
+              transition: 'all 0.2s'
+            }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = '#115e59'; e.currentTarget.style.color = '#115e59'; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(0,0,0,0.2)'; e.currentTarget.style.color = '#1a1a1a'; }}
+            >
+              {analyzing ? 'Analyzing...' : 'Apply AI suggestions'}
+            </button>
+
+            <button onClick={handleSubmit} disabled={loading} style={{
+              background: 'linear-gradient(135deg, #108077, #1ab5a8)',
+              color: '#fff', border: 'none', padding: '11px 28px',
+              borderRadius: 50, fontSize: 14, fontWeight: 600, cursor: 'pointer',
+              opacity: loading ? 0.7 : 1,
+              transition: 'transform 0.2s, box-shadow 0.2s'
+            }}
+              onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(16,128,119,0.4)'; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
+            >
+              {loading ? 'Publishing...' : 'Publish request'}
+            </button>
+          </div>
         </div>
+
+        {/* Right — AI Assistant */}
+        <div style={{ background: '#fff', border: '1px solid rgba(0,0,0,0.07)', borderRadius: 16, padding: '28px', height: 'fit-content' }}>
+          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.5, color: '#108077', textTransform: 'uppercase', marginBottom: 12 }}>AI ASSISTANT</div>
+          <h2 style={{ fontSize: 28, fontWeight: 800, color: '#1a1a1a', marginBottom: 24, lineHeight: 1.2 }}>Smart request guidance</h2>
+
+          {[
+            {
+              label: 'Suggested category',
+              value: aiResult?.category || 'Community'
+            },
+            {
+              label: 'Detected urgency',
+              value: aiResult?.urgency
+                ? aiResult.urgency.charAt(0).toUpperCase() + aiResult.urgency.slice(1)
+                : 'Low'
+            },
+            {
+              label: 'Suggested tags',
+              value: aiResult?.tags?.join(', ') || 'Add more detail for smarter tags'
+            },
+            {
+              label: 'Rewrite suggestion',
+              value: aiResult?.summary || 'Start describing the challenge to generate a stronger version.'
+            },
+          ].map((item, i) => (
+            <div key={i} style={{
+              display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start',
+              padding: '14px 0', borderBottom: i < 3 ? '1px solid rgba(0,0,0,0.06)' : 'none',
+              gap: 16
+            }}>
+              <span style={{ fontSize: 13, color: '#888', whiteSpace: 'nowrap', paddingTop: 1 }}>{item.label}</span>
+              <span style={{ fontSize: 13, fontWeight: 700, color: '#1a1a1a', textAlign: 'right', lineHeight: 1.5 }}>{item.value}</span>
+            </div>
+          ))}
+        </div>
+
       </div>
     </div>
   );
 }
 
 const inputStyle = {
-  width: '100%', background: 'rgba(255,255,255,0.04)',
-  border: '1px solid rgba(255,255,255,0.08)', borderRadius: 10,
-  padding: '11px 14px', color: '#fff', marginBottom: 16, fontSize: 14,
-  outline: 'none', boxSizing: 'border-box'
+  width: '100%', background: '#fafafa',
+  border: '1px solid rgba(0,0,0,0.1)', borderRadius: 8,
+  padding: '11px 14px', color: '#1a1a1a', fontSize: 14,
+  outline: 'none', boxSizing: 'border-box',
+  fontFamily: 'Inter, sans-serif'
 };
-const labelStyle = { display: 'block', color: '#64748b', fontSize: 12, fontWeight: 600, marginBottom: 8, textTransform: 'uppercase', letterSpacing: 0.8 };
+
+const labelStyle = {
+  display: 'block', fontSize: 13, fontWeight: 500,
+  color: '#555', marginBottom: 6
+};
