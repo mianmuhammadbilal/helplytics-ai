@@ -29,37 +29,69 @@ export default function Navbar() {
         {user ? (
           <>
             {[
-              { label: 'Dashboard', path: '/dashboard' },
-              { label: 'Explore', path: '/explore' },
-              { label: 'Create Request', path: '/create' },
-              { label: 'Messages', path: '/messages' },
-              { label: 'Profile', path: '/profile' },
-            ].map(({ label, path }) => (
-              <Link key={path} to={path} style={{
-                background: isActive(path) ? '#fff' : 'transparent',
-                border: isActive(path) ? '1px solid rgba(0,0,0,0.12)' : '1px solid transparent',
-                padding: '7px 14px', borderRadius: 8, fontSize: 14,
-                color: '#1a1a1a', fontWeight: isActive(path) ? 500 : 400,
-                textDecoration: 'none', transition: 'all 0.2s'
-              }}>{label}</Link>
-            ))}
+  { label: 'Dashboard', path: '/dashboard' },
+  { label: 'Explore', path: '/explore' },
+  { label: 'Create Request', path: '/create' },
+  { label: 'Messages', path: '/messages' },
+  { label: 'Profile', path: '/profile' },
+].map(({ label, path }) => (
+  <Link key={path} to={path} style={{
+    background: isActive(path) ? '#fff' : 'transparent',
+    border: isActive(path) ? '1px solid rgba(0,0,0,0.12)' : '1px solid transparent',
+    padding: '7px 14px', borderRadius: 50, fontSize: 16,
+    color: isActive(path) ? '#115e59' : '#1a1a1a',
+    fontWeight: isActive(path) ? 600 : 400,
+    textDecoration: 'none', transition: 'all 0.2s'
+  }}
+    onMouseEnter={e => {
+      if (!isActive(path)) {
+        e.currentTarget.style.color = '#115e59';
+        e.currentTarget.style.background = 'rgba(17,94,89,0.08)';
+        e.currentTarget.style.border = '1px solid rgba(17,94,89,0.15)';
+      }
+    }}
+    onMouseLeave={e => {
+      if (!isActive(path)) {
+        e.currentTarget.style.color = '#1a1a1a';
+        e.currentTarget.style.background = 'transparent';
+        e.currentTarget.style.border = '1px solid transparent';
+      }
+    }}
+  >{label}</Link>
+))}
           </>
         ) : (
           <>
             {[
-              { label: 'Home', path: '/' },
-              { label: 'Explore', path: '/explore' },
-              { label: 'Leaderboard', path: '/leaderboard' },
-              { label: 'AI Center', path: '/ai-center' },
-            ].map(({ label, path }) => (
-              <Link key={path} to={path} style={{
-                background: isActive(path) ? '#fff' : 'transparent',
-                border: isActive(path) ? '1px solid rgba(0,0,0,0.12)' : '1px solid transparent',
-                padding: '7px 14px', borderRadius: 8, fontSize: 14,
-                color: '#1a1a1a', fontWeight: isActive(path) ? 500 : 400,
-                textDecoration: 'none', transition: 'all 0.2s'
-              }}>{label}</Link>
-            ))}
+  { label: 'Home', path: '/' },
+  { label: 'Explore', path: '/explore' },
+  { label: 'Leaderboard', path: '/leaderboard' },
+  { label: 'AI Center', path: '/ai-center' },
+].map(({ label, path }) => (
+  <Link key={path} to={path} style={{
+    background: isActive(path) ? '#fff' : 'transparent',
+    border: isActive(path) ? '1px solid rgba(0,0,0,0.12)' : '1px solid transparent',
+    padding: '7px 14px', borderRadius: 8, fontSize: 14,
+    color: isActive(path) ? '#115e59' : '#1a1a1a',
+    fontWeight: isActive(path) ? 600 : 400,
+    textDecoration: 'none', transition: 'all 0.2s'
+  }}
+    onMouseEnter={e => {
+      if (!isActive(path)) {
+        e.currentTarget.style.color = '#115e59';
+        e.currentTarget.style.background = 'rgba(17,94,89,0.08)';
+        e.currentTarget.style.border = '1px solid rgba(17,94,89,0.15)';
+      }
+    }}
+    onMouseLeave={e => {
+      if (!isActive(path)) {
+        e.currentTarget.style.color = '#1a1a1a';
+        e.currentTarget.style.background = 'transparent';
+        e.currentTarget.style.border = '1px solid transparent';
+      }
+    }}
+  >{label}</Link>
+))}
           </>
         )}
       </div>
