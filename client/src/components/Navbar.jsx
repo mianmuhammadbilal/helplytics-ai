@@ -7,82 +7,92 @@ export default function Navbar() {
   const location = useLocation();
 
   const isActive = (path) => location.pathname === path;
-
   const handleLogout = () => { logout(); navigate('/'); };
 
   return (
     <nav style={{
-      display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-      padding: '0 32px', height: 64,
-      background: 'rgba(5,5,8,0.8)',
-      backdropFilter: 'blur(20px)',
-      borderBottom: '1px solid rgba(255,255,255,0.06)',
+      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+      padding: '14px 32px', background: '#f5f0e8',
+      borderBottom: '1px solid rgba(0,0,0,0.08)',
       position: 'sticky', top: 0, zIndex: 100
     }}>
       {/* Logo */}
-      <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+      <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
         <div style={{
-          width: 28, height: 28, borderRadius: 8,
-          background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+          width: 32, height: 32, borderRadius: 8, background: '#108077',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: 14
-        }}>⚡</div>
-        <span style={{ fontWeight: 700, fontSize: 16, color: '#fff' }}>Helplytics</span>
-        <span style={{
-          background: 'rgba(99,102,241,0.15)', color: '#818cf8',
-          fontSize: 11, padding: '2px 8px', borderRadius: 10, border: '1px solid rgba(99,102,241,0.2)'
-        }}>AI</span>
+          color: '#fff', fontWeight: 800, fontSize: 14
+        }}>H</div>
+        <span style={{ fontWeight: 700, fontSize: 15, color: '#1a1a1a' }}>Helplytics AI</span>
       </Link>
 
       {/* Nav Links */}
-      {user && (
-        <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
-          {[
-            { path: '/dashboard', label: 'Dashboard' },
-            { path: '/explore', label: 'Explore' },
-            { path: '/leaderboard', label: 'Leaderboard' },
-          ].map(({ path, label }) => (
-            <Link key={path} to={path} style={{
-              padding: '6px 14px', borderRadius: 8, fontSize: 14,
-              color: isActive(path) ? '#fff' : '#64748b',
-              background: isActive(path) ? 'rgba(99,102,241,0.15)' : 'transparent',
-              transition: 'all 0.2s'
-            }}>{label}</Link>
-          ))}
-        </div>
-      )}
+      <div style={{ display: 'flex', gap: 4 }}>
+        {[
+          { label: 'Home', path: '/' },
+          { label: 'Explore', path: '/explore' },
+          { label: 'Leaderboard', path: '/leaderboard' },
+          { label: 'AI Center', path: '/dashboard' },
+        ].map(({ label, path }) => (
+          <Link key={path} to={path} style={{
+            background: isActive(path) ? '#fff' : 'transparent',
+            border: isActive(path) ? '1px solid rgba(0,0,0,0.12)' : '1px solid transparent',
+            padding: '7px 16px', borderRadius: 8, fontSize: 14,
+            color: '#1a1a1a', fontWeight: isActive(path) ? 500 : 400,
+            textDecoration: 'none', transition: 'all 0.2s'
+          }}>{label}</Link>
+        ))}
+      </div>
 
       {/* Right Side */}
       <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
         {user ? (
-          <>
-            <Link to="/create" style={{
-              background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-              color: '#fff', border: 'none', padding: '8px 16px',
-              borderRadius: 8, fontSize: 13, fontWeight: 600
-            }}>+ New Request</Link>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-  <div style={{
-    width: 32, height: 32, borderRadius: '50%',
-    background: 'linear-gradient(135deg, #6366f1, #a855f7)',
-    display: 'flex', alignItems: 'center', justifyContent: 'center',
-    fontSize: 13, fontWeight: 700
-  }}>
-    {user.name?.charAt(0).toUpperCase()}
-  </div>
-  <button onClick={handleLogout} style={{
-    background: 'rgba(239,68,68,0.1)', color: '#fca5a5',
-    border: '1px solid rgba(239,68,68,0.2)',
-    padding: '6px 14px', borderRadius: 8, fontSize: 13, fontWeight: 500
-  }}>Logout</button>
-</div>
-          </>
-        ) : (
-          <Link to="/auth" style={{
-            background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-            color: '#fff', padding: '8px 18px', borderRadius: 8, fontSize: 14, fontWeight: 600
-          }}>Get Started</Link>
-        )}
+  <>
+    <Link to="/create" style={{
+      background: 'linear-gradient(135deg, #108077, #1ab5a8)',
+      color: '#fff', border: 'none', padding: '8px 18px',
+      borderRadius: 8, fontSize: 14, fontWeight: 600,
+      textDecoration: 'none', transition: 'transform 0.2s, box-shadow 0.2s',
+      display: 'inline-block'
+    }}
+    onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(16,128,119,0.4)'; }}
+    onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
+    >+ New Request</Link>
+    <div style={{
+      width: 32, height: 32, borderRadius: '50%',
+      background: 'linear-gradient(135deg, #108077, #1ab5a8)',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      fontSize: 13, fontWeight: 700, color: '#fff'
+    }}>
+      {user.name?.charAt(0).toUpperCase()}
+    </div>
+    <button onClick={handleLogout} style={{
+      background: 'rgba(16,128,119,0.1)', color: '#108077',
+      border: '1px solid rgba(16,128,119,0.3)',
+      padding: '6px 14px', borderRadius: 8, fontSize: 13, fontWeight: 500,
+      cursor: 'pointer'
+    }}>Logout</button>
+  </>
+) : (
+  <>
+    <button onClick={() => navigate('/explore')} style={{
+      background: 'rgba(0,0,0,0.06)', color: '#1a1a1a',
+      border: '1px solid rgba(0,0,0,0.12)',
+      padding: '8px 20px', borderRadius: 50,
+      fontSize: 14, cursor: 'pointer', fontWeight: 400
+    }}>Live community signals</button>
+    <button onClick={() => navigate('/auth')} style={{
+      background: 'linear-gradient(135deg, #108077, #1ab5a8)',
+      color: '#fff', border: 'none',
+      padding: '10px 22px', borderRadius: 50,
+      fontSize: 14, fontWeight: 600, cursor: 'pointer',
+      transition: 'transform 0.2s, box-shadow 0.2s'
+    }}
+    onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(16,128,119,0.45)'; }}
+    onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
+    >Join the platform</button>
+  </>
+)}
       </div>
     </nav>
   );
