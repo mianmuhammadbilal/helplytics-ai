@@ -166,7 +166,7 @@ export default function Auth() {
                 e.currentTarget.style.boxShadow = 'none';
               }}
             >
-              {loading ? 'Please wait...' : isLogin ? 'Continue to dashboard' : 'Create Account'}
+              {loading ? 'Please wait...' : isLogin ? 'Login' : 'Create Account'}
             </button>
 
             {/* Toggle */}

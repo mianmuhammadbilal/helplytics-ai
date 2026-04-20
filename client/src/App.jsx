@@ -10,6 +10,9 @@ import CreateRequest from './pages/CreateRequest';
 import RequestDetail from './pages/RequestDetail';
 import Leaderboard from './pages/Leaderboard';
 import Profile from './pages/Profile';
+import Messages from './pages/Messages';
+import Notifications from './pages/Notifications';
+import AiCenter from './pages/AiCenter';
 
 const ProtectedRoute = ({ children }) => {
   const { token } = useAuth();
@@ -31,6 +34,9 @@ export default function App() {
           <Route path="/request/:id" element={<ProtectedRoute><RequestDetail /></ProtectedRoute>} />
           <Route path="/leaderboard" element={<ProtectedRoute><Leaderboard /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+          <Route path="/messages" element={<ProtectedRoute><Messages /></ProtectedRoute>} />
+          <Route path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
+          <Route path="/ai-center" element={<ProtectedRoute><AiCenter /></ProtectedRoute>} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
