@@ -5,6 +5,7 @@ export default function Navbar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  if (location.pathname === '/onboarding') return null;
   const isActive = (path) => location.pathname === path;
   const handleLogout = () => { logout(); navigate('/'); };
 

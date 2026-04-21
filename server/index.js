@@ -12,24 +12,20 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/requests', require('./routes/requests'));
 app.use('/api/ai', require('./routes/ai'));
 
-// Health check
-app.get('/', (req, res) => {
-  res.json({ message: 'Helplytics API is running!' });
-});
+app.get('/', (req, res) => res.json({ message: 'Helplytics API is running!' }));
+app.get('/ping', (req, res) => res.json({ status: 'ok' }));
 
-// MongoDB connect
 mongoose.connect(process.env.MONGO_URI, {
   serverSelectionTimeoutMS: 30000,
   socketTimeoutMS: 45000,
 })
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.log('MongoDB error:', err));
-// Local development
+
 if (process.env.NODE_ENV !== 'production') {
   const PORT = process.env.PORT || 5000;
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

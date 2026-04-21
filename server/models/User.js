@@ -10,7 +10,8 @@ const userSchema = new mongoose.Schema({
   location: String,
   trustScore: { type: Number, default: 0 },
   helpedCount: { type: Number, default: 0 },
-  badges: [String]
+  badges: [String],
+  isOnboarded: { type: Boolean, default: false }
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);
