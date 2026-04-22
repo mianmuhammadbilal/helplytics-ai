@@ -19,6 +19,15 @@ const ProtectedRoute = ({ children }) => {
   return token ? children : <Navigate to="/auth" />;
 };
 
+// Onboarding sirf naye user ke liye
+const OnboardingRoute = ({ children }) => {
+  const { token, user } = useAuth();
+  if (!token) return <Navigate to="/auth" />;
+  // isOnboarded true hai to dashboard bhejo
+  if (user?.isOnboarded === true) return <Navigate to="/dashboard" />;
+  return children;
+};
+
 export default function App() {
   return (
     <AuthProvider>
@@ -27,7 +36,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/auth" element={<Auth />} />
-          <Route path="/onboarding" element={<Onboarding />} />
+          <Route path="/onboarding" element={<OnboardingRoute><Onboarding /></OnboardingRoute>} />
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="/explore" element={<ProtectedRoute><Explore /></ProtectedRoute>} />
           <Route path="/create" element={<ProtectedRoute><CreateRequest /></ProtectedRoute>} />

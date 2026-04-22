@@ -4,9 +4,11 @@ const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(() =>
-    JSON.parse(localStorage.getItem('user') || 'null')
-  );
+  const [user, setUser] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('user') || 'null');
+    } catch { return null; }
+  });
   const [token, setToken] = useState(() =>
     localStorage.getItem('token') || null
   );
@@ -18,8 +20,8 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem('token', tokenData);
   };
 
-  const updateUser = (userData) => {
-    const updated = { ...user, ...userData };
+  const updateUser = (newData) => {
+    const updated = { ...user, ...newData };
     setUser(updated);
     localStorage.setItem('user', JSON.stringify(updated));
   };

@@ -26,12 +26,24 @@ router.post('/login', async (req, res) => {
     if (!user || !(await bcrypt.compare(password, user.password)))
       return res.status(400).json({ message: 'Invalid credentials' });
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
-    res.json({ token, user: { id: user._id, name: user.name, email, role: user.role, isOnboarded: user.isOnboarded } });
+
+    // isOnboarded check — agar skills hain to onboarded samjho
+    const isOnboarded = user.isOnboarded || (user.skills && user.skills.length > 0);
+
+    res.json({
+      token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email,
+        role: user.role,
+        isOnboarded: isOnboarded
+      }
+    });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 });
-
 // Update profile
 router.put('/profile', require('../middleware/auth'), async (req, res) => {
   try {

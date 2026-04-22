@@ -72,7 +72,7 @@ export default function Navbar() {
   <Link key={path} to={path} style={{
     background: isActive(path) ? '#fff' : 'transparent',
     border: isActive(path) ? '1px solid rgba(0,0,0,0.12)' : '1px solid transparent',
-    padding: '7px 14px', borderRadius: 8, fontSize: 14,
+    padding: '7px 14px', borderRadius: 15, fontSize: 16,
     color: isActive(path) ? '#115e59' : '#1a1a1a',
     fontWeight: isActive(path) ? 600 : 400,
     textDecoration: 'none', transition: 'all 0.2s'
