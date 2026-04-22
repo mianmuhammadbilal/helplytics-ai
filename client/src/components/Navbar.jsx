@@ -126,7 +126,7 @@ export default function Navbar() {
           </>
         ) : (
           <>
-            <button onClick={() => navigate('/explore')} style={{
+            <button onClick={() => navigate('/notifications')} style={{
               background: 'rgba(0,0,0,0.06)', color: '#1a1a1a',
               border: '1px solid rgba(0,0,0,0.12)', padding: '8px 20px',
               borderRadius: 50, fontSize: 14, cursor: 'pointer'

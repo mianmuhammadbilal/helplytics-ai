@@ -49,15 +49,15 @@ export default function Landing() {
 
             <div style={{ display: 'flex', gap: 10, marginBottom: 32 }}>
               <button onClick={() => navigate('/dashboard')} style={{
-  background: 'linear-gradient(135deg, #108077, #1ab5a8)',
-  color: '#fff', border: 'none',
-  padding: '12px 26px', borderRadius: 50,
-  fontSize: 14, fontWeight: 600, cursor: 'pointer',
-  transition: 'transform 0.2s, box-shadow 0.2s'
-}}
-onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(16,128,119,0.45)'; }}
-onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
->Open product demo</button>
+                background: 'linear-gradient(135deg, #108077, #1ab5a8)',
+                color: '#fff', border: 'none',
+                padding: '12px 26px', borderRadius: 50,
+                fontSize: 14, fontWeight: 600, cursor: 'pointer',
+                transition: 'transform 0.2s, box-shadow 0.2s'
+              }}
+                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(16,128,119,0.45)'; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
+              >Open product demo</button>
               <button onClick={() => navigate('/create')} style={{
                 background: 'transparent', color: '#1a1a1a',
                 border: '1px solid rgba(0,0,0,0.2)', padding: '11px 22px',
@@ -117,10 +117,7 @@ onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.curren
             </div>
           ))}
 
-          <div style={{
-            background: '#e1e1d9', border: 'none',
-            borderRadius: 12, padding: '16px 20px'
-          }}>
+          <div style={{ background: '#e1e1d9', border: 'none', borderRadius: 12, padding: '16px 20px' }}>
             <div style={{ fontSize: 28, fontWeight: 800, color: '#000', marginBottom: 4 }}>100%</div>
             <div style={{ color: '#333', fontSize: 13 }}>Top trust score currently active across the sample mentor network.</div>
           </div>
