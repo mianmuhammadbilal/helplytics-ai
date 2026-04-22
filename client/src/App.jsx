@@ -44,7 +44,7 @@ export default function App() {
           <Route path="/leaderboard" element={<ProtectedRoute><Leaderboard /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="/messages" element={<ProtectedRoute><Messages /></ProtectedRoute>} />
-          <Route path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
+          <Route path="/notifications" element={<Notifications />} />
           <Route path="/ai-center" element={<ProtectedRoute><AiCenter /></ProtectedRoute>} />
         </Routes>
       </BrowserRouter>
