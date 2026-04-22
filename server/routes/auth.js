@@ -57,5 +57,14 @@ router.put('/profile', require('../middleware/auth'), async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 });
+// Get profile
+router.get('/profile', require('../middleware/auth'), async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password');
+    res.json(user);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
 
 module.exports = router;
