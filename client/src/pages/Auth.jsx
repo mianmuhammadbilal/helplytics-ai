@@ -2,6 +2,12 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import { useState, useEffect } from 'react';
+
+useEffect(() => {
+  // Page khulte hi backend warm karo
+  fetch('https://helplytics-ai-a3hz.vercel.app/ping').catch(() => {});
+}, []);
 
 export default function Auth() {
   const [isLogin, setIsLogin] = useState(false);
