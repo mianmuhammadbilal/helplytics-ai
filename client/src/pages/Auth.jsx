@@ -1,13 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
-import { useState, useEffect } from 'react';
-
-useEffect(() => {
-  // Page khulte hi backend warm karo
-  fetch('https://helplytics-ai-a3hz.vercel.app/ping').catch(() => {});
-}, []);
 
 export default function Auth() {
   const [isLogin, setIsLogin] = useState(false);
@@ -17,6 +11,11 @@ export default function Auth() {
   const [showPopup, setShowPopup] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
+
+  // Page load hote hi backend warm karo
+  useEffect(() => {
+    fetch('https://helplytics-ai-a3hz.vercel.app/ping').catch(() => {});
+  }, []);
 
   const handleSubmit = async () => {
     setLoading(true); setError('');
@@ -88,7 +87,7 @@ export default function Auth() {
           </div>
         </div>
       )}
-
+      
       {/* 
       {/* Main Content */}
       <div style={{
@@ -144,15 +143,23 @@ export default function Auth() {
             {!isLogin && (
               <div style={{ marginBottom: 16 }}>
                 <label style={labelStyle}>Full Name</label>
-                <input placeholder="Enter your full name" value={form.name}
-                  onChange={e => setForm({...form, name: e.target.value})} style={inputStyle} />
+                <input
+                  placeholder="Enter your full name"
+                  value={form.name}
+                  onChange={e => setForm({...form, name: e.target.value})}
+                  style={inputStyle}
+                />
               </div>
             )}
 
             {!isLogin && (
               <div style={{ marginBottom: 16 }}>
                 <label style={labelStyle}>Role selection</label>
-                <select value={form.role} onChange={e => setForm({...form, role: e.target.value})} style={inputStyle}>
+                <select
+                  value={form.role}
+                  onChange={e => setForm({...form, role: e.target.value})}
+                  style={inputStyle}
+                >
                   <option value="need_help">Need Help</option>
                   <option value="can_help">Can Help</option>
                   <option value="both">Both</option>
@@ -163,24 +170,36 @@ export default function Auth() {
             <div style={{ display: 'flex', gap: 12, marginBottom: 24 }}>
               <div style={{ flex: 1 }}>
                 <label style={labelStyle}>Email</label>
-                <input placeholder="community@helplytics.ai" value={form.email}
-                  onChange={e => setForm({...form, email: e.target.value})} style={inputStyle} />
+                <input
+                  placeholder="community@helplytics.ai"
+                  value={form.email}
+                  onChange={e => setForm({...form, email: e.target.value})}
+                  style={inputStyle}
+                />
               </div>
               <div style={{ flex: 1 }}>
                 <label style={labelStyle}>Password</label>
-                <input type="password" placeholder="••••••••" value={form.password}
-                  onChange={e => setForm({...form, password: e.target.value})} style={inputStyle} />
+                <input
+                  type="password"
+                  placeholder="••••••••"
+                  value={form.password}
+                  onChange={e => setForm({...form, password: e.target.value})}
+                  style={inputStyle}
+                />
               </div>
             </div>
 
-            <button onClick={handleSubmit} disabled={loading} style={{
-              width: '100%',
-              background: 'linear-gradient(135deg, #108077, #1ab5a8)',
-              color: '#fff', border: 'none', padding: '15px',
-              borderRadius: 50, fontSize: 16, fontWeight: 600, cursor: 'pointer',
-              transition: 'transform 0.2s, box-shadow 0.2s',
-              opacity: loading ? 0.7 : 1
-            }}
+            <button
+              onClick={handleSubmit}
+              disabled={loading}
+              style={{
+                width: '100%',
+                background: 'linear-gradient(135deg, #108077, #1ab5a8)',
+                color: '#fff', border: 'none', padding: '15px',
+                borderRadius: 50, fontSize: 16, fontWeight: 600, cursor: 'pointer',
+                transition: 'transform 0.2s, box-shadow 0.2s',
+                opacity: loading ? 0.7 : 1
+              }}
               onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(16,128,119,0.45)'; }}
               onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
             >
@@ -189,8 +208,10 @@ export default function Auth() {
 
             <p style={{ color: '#888', textAlign: 'center', marginTop: 20, fontSize: 14 }}>
               {isLogin ? "Don't have an account? " : "Already have one? "}
-              <span onClick={() => { setIsLogin(!isLogin); setError(''); }}
-                style={{ color: '#108077', cursor: 'pointer', fontWeight: 600 }}>
+              <span
+                onClick={() => { setIsLogin(!isLogin); setError(''); }}
+                style={{ color: '#108077', cursor: 'pointer', fontWeight: 600 }}
+              >
                 {isLogin ? 'Sign up' : 'Sign in'}
               </span>
             </p>
