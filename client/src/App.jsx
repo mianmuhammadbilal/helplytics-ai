@@ -41,7 +41,7 @@ export default function App() {
           <Route path="/explore" element={<ProtectedRoute><Explore /></ProtectedRoute>} />
           <Route path="/create" element={<ProtectedRoute><CreateRequest /></ProtectedRoute>} />
           <Route path="/request/:id" element={<ProtectedRoute><RequestDetail /></ProtectedRoute>} />
-          <Route path="/leaderboard" element={<ProtectedRoute><Leaderboard /></ProtectedRoute>} />
+          <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="/messages" element={<ProtectedRoute><Messages /></ProtectedRoute>} />
           <Route path="/notifications" element={<Notifications />} />
