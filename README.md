@@ -10,7 +10,7 @@ A full-stack, AI-powered community platform that connects students who need help
 
 | Service | URL |
 |--------|-----|
-| 🖥️ Frontend | [helplytics-ai-client.vercel.app](https://helplytics-ai-client.vercel.app) |
+| 🖥️ Frontend | [helplytics-ai-client.vercel.app](https://helplytics-ai-idlo.vercel.app/) |
 | ⚙️ Backend API | [helplytics-ai-a3hz.vercel.app](https://helplytics-ai-a3hz.vercel.app) |
 | 📦 GitHub Repo | [github.com/mianmuhammadbilal/helplytics-ai](https://github.com/mianmuhammadbilal/helplytics-ai) |
 
